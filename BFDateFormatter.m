@@ -27,4 +27,40 @@
     
 }
 
++ (NSString *)convertCurrentTimeToUTC {
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dataStr = [format stringFromDate:currentDate];
+    NSLog(@"世界标准时间:%@",dataStr);
+    return dataStr;
+}
+
++ (NSString *)convertUTCTimeToCurrent:(NSString *)utcTime {
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [format dateFromString:utcTime];
+    //设置源日期时区
+    NSTimeZone* sourceTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];//或GMT
+    
+    //设置转换后的目标日期时区
+    NSTimeZone* destinationTimeZone = [NSTimeZone localTimeZone];
+
+    //得到源日期与世界标准时间的偏移量
+    NSInteger sourceGMTOffset = [sourceTimeZone secondsFromGMTForDate:date];
+
+    //目标日期与本地时区的偏移量
+    NSInteger destinationGMTOffset = [destinationTimeZone secondsFromGMTForDate:date];
+
+    //得到时间偏移量的差值
+    NSTimeInterval interval = destinationGMTOffset - sourceGMTOffset;
+
+    //转为现在时间
+    NSDate* destinationDateNow = [[NSDate alloc] initWithTimeInterval:interval sinceDate:date];
+    NSString *str1 = [format stringFromDate:destinationDateNow];
+    NSLog(@"当前时间: %@",str1);
+    return str1;
+}
+
 @end
