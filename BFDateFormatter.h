@@ -11,6 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BFDateFormatter : NSObject
 + (NSString *)getTimeFromTimestamp:(NSTimeInterval)timestamp;
+
++ (NSString *)convertCurrentTimeToUTC;
+
++ (NSString *)convertUTCTimeToCurrent:(NSString *)utcTime;
 @end
 
 NS_ASSUME_NONNULL_END
