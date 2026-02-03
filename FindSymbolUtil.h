@@ -15,4 +15,5 @@ void *FindSymbolFromMachHeader(const struct mach_header *header, intptr_t slide,
 
 @interface FindSymbolUtil : NSObject
 - (void)test;
+- (BOOL)test2;
 @end
